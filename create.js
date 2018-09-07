@@ -1,12 +1,9 @@
-import uuid from 'UUID';
-import AWS from 'aws-sdk';
+import uuid from 'uuid';
+import * as dynamoDBLib from './libs/dynamoDB';
+import { success, failure } from './libs/response';
 
-AWS.config.update({ region: 'us-east-1' });
-const dynamoDB = new AWS.DynamoDB.DocumentClient();
-
-export function main (event, context, callback) {
+export async function main (event, context, callback) {
 	const data = JSON.parse(event.body);
-
 	const params = {
 		TableName: 'notes',
 		Item: {
@@ -19,27 +16,10 @@ export function main (event, context, callback) {
 		}
 	};
 
-	dynamoDB.put(params, (error, data) => {
-		const headers = {
-			'Access-Control-Allow-Origin': '*',
-			'Access-Control-Allow-Credentials': true
-		};
-
-		if (error) {
-			const response = {
-				headers,
-				statusCode: 500,
-				body: JSON.stringify({ status: false })
-			};
-			callback(null, response);
-			return;
-		}
-
-		const response = {
-			headers,
-			statusCode: 200,
-			body: JSON.stringify(params.Item)
-		};
-		callback(null, response);
-	});
+	try {
+		await dynamoDBLib.call('put', params);
+		callback(null, success(params.Item));
+	} catch (exception) {
+		callback(null, failure({ status: false }));
+	}
 }
