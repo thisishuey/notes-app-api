@@ -11,8 +11,7 @@ export async function main (event, context, callback) {
 	};
 
 	try {
-		const result = await dynamoDBLib.call('delete', params);
-		console.log(result);
+		await dynamoDBLib.call('delete', params);
 		callback(null, success({ status: true }));
 	} catch (exception) {
 		callback(null, failure({ status: false }));
