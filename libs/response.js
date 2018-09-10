@@ -13,7 +13,7 @@ export function failure (body) {
 function buildResponse (statusCode, body) {
 	return {
 		statusCode,
-		header: {
+		headers: {
 			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Credentials': true
 		},

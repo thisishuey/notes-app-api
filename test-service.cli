@@ -1,0 +1,12 @@
+npx aws-api-gateway-cli-test \
+--user-pool-id='us-east-1_BSsHkCjvo' \
+--app-client-id='1r5pfgl6ini5us2sjqlr6imuem' \
+--cognito-region='us-east-1' \
+--identity-pool-id='us-east-1:e50b48b0-fbe6-42bb-9243-5baa69510ddb' \
+--invoke-url='https://zy72eu0jt8.execute-api.us-east-1.amazonaws.com' \
+--api-gateway-region='us-east-1' \
+--path-template='/dev/notes' \
+--method='POST' \
+--body='{"content":"hello world","attachment":"hello.jpg"}' \
+--username='huey@carpetelam.com' \
+--password='Password!'
